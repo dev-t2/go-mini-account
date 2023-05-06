@@ -8,3 +8,4 @@
   - [no-empty-interface](https://typescript-eslint.io/rules/no-empty-interface)
 - [Emotion](https://emotion.sh/docs/introduction)
   - [@emotion/native](https://emotion.sh/docs/@emotion/native)
+- [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler)

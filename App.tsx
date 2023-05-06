@@ -1,8 +1,13 @@
 import { memo } from 'react';
-import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import styled from '@emotion/native';
+
+const StyledGestureHandlerRootView = styled(GestureHandlerRootView)({
+  flex: 1,
+});
 
 const App = () => {
-  return <View></View>;
+  return <StyledGestureHandlerRootView></StyledGestureHandlerRootView>;
 };
 
 export default memo(App);
