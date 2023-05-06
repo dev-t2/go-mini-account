@@ -9,3 +9,4 @@
 - [Emotion](https://emotion.sh/docs/introduction)
   - [@emotion/native](https://emotion.sh/docs/@emotion/native)
 - [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler)
+- [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated)
