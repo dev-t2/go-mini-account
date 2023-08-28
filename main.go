@@ -8,6 +8,8 @@ import (
 func main() {
 	var account = accounts.CreateAccount()
 
+	fmt.Println(account)
+
 	fmt.Println("Balance:", account.Balance())
 
 	account.Deposit(10)
