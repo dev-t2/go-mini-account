@@ -1,10 +1,31 @@
 package accounts
 
+import "errors"
+
 type account struct {
-	id      int
 	balance int
 }
 
-func CreateAccount(id int) *account {
-	return &account{id: id, balance: 0}
+var errWithdraw = errors.New("Withdraw Method Error")
+
+func CreateAccount() *account {
+	return &account{balance: 0}
+}
+
+func (a *account) Deposit(amount int) {
+	a.balance += amount
+}
+
+func (a account) Balance() int {
+	return a.balance
+}
+
+func (a *account) Withdraw(amount int) error {
+	if a.balance < amount {
+		return errWithdraw
+	}
+
+	a.balance -= amount
+
+	return nil
 }
