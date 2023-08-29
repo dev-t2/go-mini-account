@@ -4,12 +4,13 @@ import "errors"
 
 type dictionary map[string]string
 
-var errNotFound = errors.New("Not Found")
+var (
+	errNotFound = errors.New("Not Found")
+	errKeyExists = errors.New("Key Exists")
+)
 
-var errKeyExists = errors.New("Key Exists")
-
-func CreateDictionary(key, value string) *dictionary {
-	return &dictionary{key: value}
+func CreateDictionary(key, value string) dictionary {
+	return dictionary{key: value}
 }
 
 func (d dictionary) Search(key string) (string, error) {
@@ -32,4 +33,16 @@ func (d dictionary) Add(key, value string) error {
 	} else {
 		return errKeyExists
 	}
+}
+
+func (d dictionary) Update(key, value string) error{
+	_, err := d.Search(key)
+
+	if err != nil {
+		return errNotFound
+	}
+
+	d[key] = value
+
+	return nil
 }

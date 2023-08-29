@@ -9,7 +9,7 @@ type account struct {
 	balance int
 }
 
-var errWithdraw = errors.New("Withdraw Method Error!!")
+var errWithdraw = errors.New("Withdraw Method Error")
 
 func CreateAccount() *account {
 	return &account{balance: 0}

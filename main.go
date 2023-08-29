@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	fmt.Println("1. Account")
+
 	var account = accounts.CreateAccount()
 
 	fmt.Println(account)
@@ -20,16 +22,23 @@ func main() {
 	var err = account.Withdraw(20)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error:", err)
 	} else {
 		fmt.Println("Balance:", account.Balance())
 	}
 
 	fmt.Println()
+	fmt.Println("2. Dictionary")
 
 	var dict = dictionary.CreateDictionary("Hello", "World")
 
 	err = dict.Add("Go", "Programming")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = dict.Update("Go", "Awesome")
 
 	if err != nil {
 		fmt.Println(err)
@@ -40,6 +49,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(value)
+		fmt.Println("Value:", value)
 	}
 }
