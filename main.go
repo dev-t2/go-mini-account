@@ -29,7 +29,13 @@ func main() {
 
 	var dict = dictionary.CreateDictionary("Hello", "World")
 
-	value, err := dict.Search("Helloo")
+	err = dict.Add("Go", "Programming")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	value, err := dict.Search("Go")
 
 	if err != nil {
 		fmt.Println(err)
