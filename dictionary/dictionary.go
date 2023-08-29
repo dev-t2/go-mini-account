@@ -46,3 +46,15 @@ func (d dictionary) Update(key, value string) error{
 
 	return nil
 }
+
+func (d dictionary) Delete(key string) error {
+	_, err := d.Search(key)
+
+	if err != nil {
+		return errNotFound
+	}
+
+	delete(d, key)
+
+	return nil
+}

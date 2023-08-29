@@ -32,10 +32,26 @@ func main() {
 
 	var dict = dictionary.CreateDictionary("Hello", "World")
 
+	value, err := dict.Search("Hello")
+
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("Key: Hello, Value:", value)
+	}
+
 	err = dict.Add("Go", "Programming")
 
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	value, err = dict.Search("Go")
+
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("Key: Go, Value:", value)
 	}
 
 	err = dict.Update("Go", "Awesome")
@@ -44,11 +60,25 @@ func main() {
 		fmt.Println(err)
 	}
 
-	value, err := dict.Search("Go")
+	value, err = dict.Search("Go")
+
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("Key: Go, Updated Value:", value)
+	}
+
+	err = dict.Delete("Go")
 
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	value, err = dict.Search("Go")
+
+	if err != nil {
+		fmt.Println("Error:", err)
 	} else {
-		fmt.Println("Value:", value)
+		fmt.Println("Key: Go, Value:", value)
 	}
 }
