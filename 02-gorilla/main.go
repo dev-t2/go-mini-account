@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -17,7 +19,9 @@ func main() {
 		res.Write([]byte("Hello Go"))
 	})
 
+	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
+
 	fmt.Printf("Server running at http://localhost%s\n", addr)
 
-	log.Fatal(http.ListenAndServe(addr, router))
+	log.Fatal(http.ListenAndServe(addr, loggedRouter))
 }
