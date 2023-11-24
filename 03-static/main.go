@@ -15,6 +15,8 @@ const addr = ":8080"
 func main() {
 	router := mux.NewRouter()
 
+	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
+
 	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
 
 	fmt.Printf("Server running at http://localhost%s\n", addr)
