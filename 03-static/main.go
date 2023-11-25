@@ -17,7 +17,7 @@ func main() {
 
 	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
 
-	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
+	loggedRouter := handlers.CombinedLoggingHandler(os.Stdout, router)
 
 	fmt.Printf("Server running at http://localhost%s\n", addr)
 

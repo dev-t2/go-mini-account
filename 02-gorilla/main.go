@@ -19,7 +19,7 @@ func main() {
 		res.Write([]byte("Hello Go"))
 	})
 
-	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
+	loggedRouter := handlers.CombinedLoggingHandler(os.Stdout, router)
 
 	fmt.Printf("Server running at http://localhost%s\n", addr)
 
