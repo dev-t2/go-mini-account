@@ -19,6 +19,11 @@ func main() {
 		res.Write([]byte("Hello Go"))
 	})
 
+	router.NotFoundHandler = http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		res.WriteHeader(http.StatusNotFound)
+		res.Write([]byte("Not Found"))
+	})
+
 	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
 
 	fmt.Printf("Server running at http://localhost%s\n", addr)
