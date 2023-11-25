@@ -15,7 +15,7 @@ const addr = ":8080"
 func main() {
 	router := mux.NewRouter()
 
-	loggedRouter := handlers.CombinedLoggingHandler(os.Stdout, router)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
 
 	recoveredRouter := handlers.RecoveryHandler()
 

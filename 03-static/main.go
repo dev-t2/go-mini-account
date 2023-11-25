@@ -17,7 +17,7 @@ func main() {
 
 	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
 
-	loggedRouter := handlers.CombinedLoggingHandler(os.Stdout, router)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
 
 	recoveredRouter := handlers.RecoveryHandler()
 

@@ -19,7 +19,7 @@ func main() {
 		res.Write([]byte("Hello Go"))
 	})
 
-	loggedRouter := handlers.CombinedLoggingHandler(os.Stdout, router)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
 	
 	recoveredRouter := handlers.RecoveryHandler()
 
