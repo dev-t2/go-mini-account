@@ -17,7 +17,9 @@ func main() {
 
 	loggedRouter := handlers.CombinedLoggingHandler(os.Stdout, router)
 
+	recoveredRouter := handlers.RecoveryHandler()
+
 	fmt.Printf("Server running at http://localhost%s\n", addr)
 
-	log.Fatal(http.ListenAndServe(addr, loggedRouter))
+	log.Fatal(http.ListenAndServe(addr, recoveredRouter(loggedRouter)))
 }
