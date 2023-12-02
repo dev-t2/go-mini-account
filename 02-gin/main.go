@@ -13,5 +13,9 @@ func main() {
 		c.String(http.StatusOK, "Hello Gin")
 	})
 
+	r.NoRoute(func(c *gin.Context) {
+		c.String(http.StatusNotFound, "Not Found")
+	})
+
 	r.Run()
 }
