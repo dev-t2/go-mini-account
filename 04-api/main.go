@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,6 +25,26 @@ func main() {
 
 	engine.GET("/users", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"users": users})
+	})
+
+	engine.GET("/users/:id", func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+
+		if err != nil {
+			ctx.String(http.StatusBadRequest, "Bad Request")
+
+			return
+		}
+
+		for _, user := range users {
+			if user.ID == id {
+				ctx.JSON(http.StatusOK, user)
+
+				return
+			}
+		}
+
+		ctx.String(http.StatusNotFound, "Not Found")
 	})
 
 	engine.POST("/users", func(ctx *gin.Context) {
