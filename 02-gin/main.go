@@ -1,13 +1,24 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
+const addr = ":8080"
+
 func main() {
-	r := gin.Default()
+	r := gin.New()
+
+	r.SetTrustedProxies(nil)
+
+	r.Use(gin.Logger())
+
+	r.Use(gin.CustomRecovery(func(c *gin.Context, err any) {
+		c.String(http.StatusInternalServerError, "Internal Server Error")
+	}))
 
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello Gin")
@@ -17,5 +28,9 @@ func main() {
 		c.String(http.StatusNotFound, "Not Found")
 	})
 
-	r.Run()
+	err := r.Run(addr)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
