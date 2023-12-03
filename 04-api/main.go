@@ -90,7 +90,7 @@ func main() {
 			if user.ID == id {
 				users[index].Nickname = updateUser.Nickname
 
-				ctx.JSON(http.StatusNoContent, nil)
+				ctx.Status(http.StatusNoContent)
 
 				return
 			}
@@ -112,7 +112,7 @@ func main() {
 			if user.ID == id {
 				users = append(users[:index], users[index+1:]...)
 
-				ctx.JSON(http.StatusNoContent, nil)
+				ctx.Status(http.StatusNoContent)
 
 				return
 			}
