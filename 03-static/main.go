@@ -18,6 +18,8 @@ func main() {
 		c.String(http.StatusInternalServerError, "Internal Server Error")
 	}))
 
+	router.Static("/", "./03-static/public")
+
 	router.NoRoute(func(c *gin.Context) {
 		c.String(http.StatusNotFound, "Not Found")
 	})
