@@ -12,8 +12,6 @@ const addr = ":8080"
 func main() {
 	r := gin.New()
 
-	r.SetTrustedProxies(nil)
-
 	r.Use(gin.Logger())
 
 	r.Use(gin.CustomRecovery(func(c *gin.Context, err any) {
