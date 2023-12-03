@@ -99,6 +99,28 @@ func main() {
 		ctx.String(http.StatusNotFound, "Not Found")
 	})
 
+	engine.DELETE("/users/:id", func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+
+		if err != nil {
+			ctx.String(http.StatusBadRequest, "Bad Request")
+
+			return
+		}
+
+		for index, user := range users {
+			if user.ID == id {
+				users = append(users[:index], users[index+1:]...)
+
+				ctx.JSON(http.StatusNoContent, nil)
+
+				return
+			}
+		}
+
+		ctx.String(http.StatusNotFound, "Not Found")
+	})
+
 	engine.NoRoute(func(ctx *gin.Context) {
 		ctx.String(http.StatusNotFound, "Not Found")
 	})
