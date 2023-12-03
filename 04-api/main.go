@@ -48,9 +48,9 @@ func main() {
 	})
 
 	engine.POST("/users", func(ctx *gin.Context) {
-		var createUser struct {Nickname string}
+		var body struct {Nickname string}
 
-		if err := ctx.ShouldBindJSON(&createUser); err != nil {
+		if err := ctx.ShouldBindJSON(&body); err != nil {
 			ctx.String(http.StatusBadRequest, "Bad Request")
 
 			return
@@ -62,7 +62,7 @@ func main() {
 			id = users[len(users) - 1].ID + 1
 		}
 
-		user := User{ID: id, Nickname: createUser.Nickname}
+		user := User{ID: id, Nickname: body.Nickname}
 
 		users = append(users, user)
 
@@ -78,9 +78,9 @@ func main() {
 			return
 		}
 
-		var updateUser struct {Nickname string}
+		var body struct {Nickname string}
 
-		if err := ctx.ShouldBindJSON(&updateUser); err != nil {
+		if err := ctx.ShouldBindJSON(&body); err != nil {
 			ctx.String(http.StatusBadRequest, "Bad Request")
 
 			return
@@ -88,7 +88,7 @@ func main() {
 
 		for index, user := range users {
 			if user.ID == id {
-				users[index].Nickname = updateUser.Nickname
+				users[index].Nickname = body.Nickname
 
 				ctx.Status(http.StatusNoContent)
 
