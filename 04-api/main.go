@@ -14,19 +14,19 @@ type User struct {
 var users = []User{}
 
 func main() {
-	router := gin.New()
+	engine := gin.New()
 
-	router.Use(gin.Logger())
+	engine.Use(gin.Logger())
 
-	router.Use(gin.CustomRecovery(func(ctx *gin.Context, err any) {
+	engine.Use(gin.CustomRecovery(func(ctx *gin.Context, err any) {
 		ctx.String(http.StatusInternalServerError, "Internal Server Error")
 	}))
 
-	router.GET("/users", func(ctx *gin.Context) {
+	engine.GET("/users", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"users": users})
 	})
 
-	router.POST("/users", func(ctx *gin.Context) {
+	engine.POST("/users", func(ctx *gin.Context) {
 		var user User
 
 		if err := ctx.ShouldBindJSON(&user); err != nil {
@@ -48,9 +48,9 @@ func main() {
 		ctx.JSON(http.StatusCreated, user)
 	})
 
-	router.NoRoute(func(ctx *gin.Context) {
+	engine.NoRoute(func(ctx *gin.Context) {
 		ctx.String(http.StatusNotFound, "Not Found")
 	})
 
-	router.Run(":8080")
+	engine.Run(":8080")
 }
