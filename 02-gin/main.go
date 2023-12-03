@@ -27,7 +27,7 @@ func main() {
 		context.String(http.StatusNotFound, "Not Found")
 	})
 
-	fmt.Printf("Server running at http://localhost:%s\n", addr)
+	fmt.Printf("Server running at http://localhost%s\n", addr)
 
 	err := router.Run(addr)
 
