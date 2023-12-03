@@ -15,14 +15,14 @@ func main() {
 
 	router.Use(gin.Logger())
 
-	router.Use(gin.CustomRecovery(func(c *gin.Context, err any) {
-		c.String(http.StatusInternalServerError, "Internal Server Error")
+	router.Use(gin.CustomRecovery(func(context *gin.Context, err any) {
+		context.String(http.StatusInternalServerError, "Internal Server Error")
 	}))
 
 	router.Static("/", "03-static/public")
 
-	router.NoRoute(func(c *gin.Context) {
-		c.String(http.StatusNotFound, "Not Found")
+	router.NoRoute(func(context *gin.Context) {
+		context.String(http.StatusNotFound, "Not Found")
 	})
 
 	fmt.Printf("Server running at http://localhost%s\n", addr)
