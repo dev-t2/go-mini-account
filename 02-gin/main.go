@@ -10,23 +10,23 @@ import (
 const addr = ":8080"
 
 func main() {
-	r := gin.New()
+	router := gin.New()
 
-	r.Use(gin.Logger())
+	router.Use(gin.Logger())
 
-	r.Use(gin.CustomRecovery(func(c *gin.Context, err any) {
+	router.Use(gin.CustomRecovery(func(c *gin.Context, err any) {
 		c.String(http.StatusInternalServerError, "Internal Server Error")
 	}))
 
-	r.GET("/", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello Gin")
 	})
 
-	r.NoRoute(func(c *gin.Context) {
+	router.NoRoute(func(c *gin.Context) {
 		c.String(http.StatusNotFound, "Not Found")
 	})
 
-	err := r.Run(addr)
+	err := router.Run(addr)
 
 	if err != nil {
 		log.Fatal(err)
