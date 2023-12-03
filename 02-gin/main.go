@@ -1,14 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
-
-const addr = ":8080"
 
 func main() {
 	router := gin.New()
@@ -27,11 +23,5 @@ func main() {
 		ctx.String(http.StatusNotFound, "Not Found")
 	})
 
-	fmt.Printf("Server running at http://localhost%s\n", addr)
-
-	err := router.Run(addr)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	router.Run(":8080")
 }

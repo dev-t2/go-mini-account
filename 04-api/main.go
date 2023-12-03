@@ -1,21 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type User struct {
-	id       int
-	nickname string
+	ID       int    `json:"id"`
+	Nickname string `json:"nickname"`
 }
 
-var users = make([]User, 0)
-
-const addr = ":8080"
+var users = []User{}
 
 func main() {
 	router := gin.New()
@@ -32,11 +28,5 @@ func main() {
 		ctx.String(http.StatusNotFound, "Not Found")
 	})
 
-	fmt.Printf("Server running at http://localhost%s\n", addr)
-
-	err := router.Run(addr)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	router.Run(":8080")
 }
