@@ -48,25 +48,55 @@ func main() {
 	})
 
 	engine.POST("/users", func(ctx *gin.Context) {
-		var user User
+		var createUser struct {Nickname string}
 
-		if err := ctx.ShouldBindJSON(&user); err != nil {
+		if err := ctx.ShouldBindJSON(&createUser); err != nil {
 			ctx.String(http.StatusBadRequest, "Bad Request")
 
 			return
 		}
-
+		
 		var id = 1
 		
 		if len(users) > 0 {
 			id = users[len(users) - 1].ID + 1
 		}
 
-		user.ID = id
+		user := User{ID: id, Nickname: createUser.Nickname}
 
 		users = append(users, user)
 
 		ctx.JSON(http.StatusCreated, user)
+	})
+
+	engine.PUT("/users/:id", func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+
+		if err != nil {
+			ctx.String(http.StatusBadRequest, "Bad Request")
+
+			return
+		}
+
+		var updateUser struct {Nickname string}
+
+		if err := ctx.ShouldBindJSON(&updateUser); err != nil {
+			ctx.String(http.StatusBadRequest, "Bad Request")
+
+			return
+		}
+
+		for index, user := range users {
+			if user.ID == id {
+				users[index].Nickname = updateUser.Nickname
+
+				ctx.JSON(http.StatusNoContent, nil)
+
+				return
+			}
+		}
+
+		ctx.String(http.StatusNotFound, "Not Found")
 	})
 
 	engine.NoRoute(func(ctx *gin.Context) {
