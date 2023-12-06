@@ -8,7 +8,7 @@ import (
 )
 
 type User struct {
-	ID       int    `json:"id"`
+	Id       int    `json:"id"`
 	Nickname string `json:"nickname"`
 }
 
@@ -37,7 +37,7 @@ func main() {
 		}
 
 		for _, user := range users {
-			if user.ID == id {
+			if user.Id == id {
 				ctx.JSON(http.StatusOK, user)
 
 				return
@@ -48,7 +48,7 @@ func main() {
 	})
 
 	engine.POST("/users", func(ctx *gin.Context) {
-		var body struct {Nickname string}
+		var body struct { Nickname string }
 
 		if err := ctx.ShouldBindJSON(&body); err != nil {
 			ctx.String(http.StatusBadRequest, "Bad Request")
@@ -59,10 +59,10 @@ func main() {
 		var id = 1
 		
 		if len(users) > 0 {
-			id = users[len(users) - 1].ID + 1
+			id = users[len(users) - 1].Id + 1
 		}
 
-		user := User{ID: id, Nickname: body.Nickname}
+		user := User{Id: id, Nickname: body.Nickname}
 
 		users = append(users, user)
 
@@ -87,7 +87,7 @@ func main() {
 		}
 
 		for index, user := range users {
-			if user.ID == id {
+			if user.Id == id {
 				users[index].Nickname = body.Nickname
 
 				ctx.Status(http.StatusNoContent)
@@ -109,7 +109,7 @@ func main() {
 		}
 
 		for index, user := range users {
-			if user.ID == id {
+			if user.Id == id {
 				users = append(users[:index], users[index+1:]...)
 
 				ctx.Status(http.StatusNoContent)
