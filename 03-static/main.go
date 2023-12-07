@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"path"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +16,7 @@ func main() {
 		ctx.String(http.StatusInternalServerError, "Internal Server Error")
 	}))
 
-	engine.Static("/", "03-static/public")
+	engine.Static("/", path.Join("03-static", "public"))
 
 	engine.NoRoute(func(ctx *gin.Context) {
 		ctx.String(http.StatusNotFound, "Not Found")
