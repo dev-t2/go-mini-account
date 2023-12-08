@@ -24,7 +24,7 @@ func main() {
 	}))
 
 	engine.GET("/users", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{"users": users})
+		ctx.JSON(http.StatusOK, gin.H{ "users" : users })
 	})
 
 	engine.GET("/users/:id", func(ctx *gin.Context) {
