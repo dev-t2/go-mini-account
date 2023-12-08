@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"path"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,8 +14,8 @@ func main() {
 	engine.Use(gin.CustomRecovery(func(ctx *gin.Context, err any) {
 		ctx.String(http.StatusInternalServerError, "Internal Server Error")
 	}))
-
-	engine.Static("/", path.Join("03-static", "public"))
+	
+	engine.Static("/", "03-static/public")
 
 	engine.NoRoute(func(ctx *gin.Context) {
 		ctx.String(http.StatusNotFound, "Not Found")
