@@ -95,12 +95,28 @@ func main() {
 			return
 		}
 
-		var body struct {Nickname string}
+		var body struct { Nickname string }
 
 		if err := ctx.ShouldBindJSON(&body); err != nil {
 			ctx.String(http.StatusBadRequest, "Bad Request")
 
 			return
+		}
+
+		body.Nickname = strings.Trim(body.Nickname, " ")
+
+		if body.Nickname == "" {
+			ctx.String(http.StatusBadRequest, "Bad Request")
+
+			return
+		}
+
+		for _, user := range users {
+			if user.Nickname == body.Nickname {
+				ctx.String(http.StatusBadRequest, "Bad Request")
+
+				return
+			}
 		}
 
 		for index, user := range users {
