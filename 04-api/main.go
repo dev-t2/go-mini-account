@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -54,6 +55,22 @@ func main() {
 			ctx.String(http.StatusBadRequest, "Bad Request")
 
 			return
+		}
+
+		body.Nickname = strings.Trim(body.Nickname, " ")
+
+		if body.Nickname == "" {
+			ctx.String(http.StatusBadRequest, "Bad Request")
+
+			return
+		}
+
+		for _, user := range users {
+			if user.Nickname == body.Nickname {
+				ctx.String(http.StatusBadRequest, "Bad Request")
+
+				return
+			}
 		}
 		
 		var id = 1
