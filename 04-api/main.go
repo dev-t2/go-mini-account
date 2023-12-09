@@ -28,26 +28,6 @@ func main() {
 		ctx.JSON(http.StatusOK, gin.H{ "users" : users })
 	})
 
-	engine.GET("/users/:id", func(ctx *gin.Context) {
-		id, err := strconv.Atoi(ctx.Param("id"))
-
-		if err != nil {
-			ctx.String(http.StatusBadRequest, "Bad Request")
-
-			return
-		}
-
-		for _, user := range users {
-			if user.Id == id {
-				ctx.JSON(http.StatusOK, user)
-
-				return
-			}
-		}
-
-		ctx.String(http.StatusNotFound, "Not Found")
-	})
-
 	engine.POST("/users", func(ctx *gin.Context) {
 		var body struct { Nickname string }
 
@@ -84,6 +64,26 @@ func main() {
 		users = append(users, user)
 
 		ctx.JSON(http.StatusCreated, user)
+	})
+
+	engine.GET("/users/:id", func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+
+		if err != nil {
+			ctx.String(http.StatusBadRequest, "Bad Request")
+
+			return
+		}
+
+		for _, user := range users {
+			if user.Id == id {
+				ctx.JSON(http.StatusOK, user)
+
+				return
+			}
+		}
+
+		ctx.String(http.StatusNotFound, "Not Found")
 	})
 
 	engine.PUT("/users/:id", func(ctx *gin.Context) {
