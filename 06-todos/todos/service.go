@@ -42,7 +42,7 @@ func DeleteTodos(ctx *gin.Context) {
 }
 
 func UpdateTodo(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
+	_, err := strconv.Atoi(ctx.Param("id"))
 
 	if err != nil {
 		ctx.String(http.StatusBadRequest, "Bad Request")
@@ -58,5 +58,5 @@ func UpdateTodo(ctx *gin.Context) {
 		return
 	}
 
-	fmt.Println(id)
+	fmt.Println(body)
 }
