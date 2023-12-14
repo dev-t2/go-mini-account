@@ -6,7 +6,7 @@ POST http://localhost:8080/users
 content-type: application/json
 
 {
-  "nickname": "Austin"
+  "nickname": "Nickname"
 }
 
 ###
@@ -19,7 +19,7 @@ PUT http://localhost:8080/users/1
 content-type: application/json
 
 {
-  "nickname": "Jack"
+  "nickname": "Updated Nickname"
 }
 
 ###
