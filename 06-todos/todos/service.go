@@ -1,7 +1,6 @@
 package todos
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -30,7 +29,7 @@ func CreateTodo(ctx *gin.Context) {
 		id = todos[len(todos) - 1].Id + 1
 	}
 
-	todo := Todo{Id: id, Content: strings.Trim(body.Content, " "), IsComplete: false}
+	todo := Todo{Id: id, Content: strings.Trim(body.Content, " ")}
 
 	todos = append(todos, todo)
 
@@ -42,7 +41,7 @@ func DeleteTodos(ctx *gin.Context) {
 }
 
 func UpdateTodo(ctx *gin.Context) {
-	_, err := strconv.Atoi(ctx.Param("id"))
+	id, err := strconv.Atoi(ctx.Param("id"))
 
 	if err != nil {
 		ctx.String(http.StatusBadRequest, "Bad Request")
@@ -50,7 +49,10 @@ func UpdateTodo(ctx *gin.Context) {
 		return
 	}
 
-	var body struct { Content string; IsComplete bool }
+	var body struct { 
+		Content string; 
+		IsComplete bool;
+	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		ctx.String(http.StatusBadRequest, "Bad Request")
@@ -58,5 +60,15 @@ func UpdateTodo(ctx *gin.Context) {
 		return
 	}
 
-	fmt.Println(body)
+	for index, todo := range todos {
+		if todo.Id == id {
+			todos[index] = Todo{Id: todo.Id, Content: strings.Trim(body.Content, " "), IsComplete: body.IsComplete}
+
+			ctx.Status(http.StatusNoContent)
+
+			return
+		}
+	}
+
+	ctx.String(http.StatusNotFound, "Not Found")
 }
