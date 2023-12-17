@@ -10,7 +10,7 @@ import (
 func main() {
 	engine := gin.New()
 
-	engine.Static("/public", "/public")
+	engine.Static("/public", "public")
 
 	engine.Use(gin.Logger())
 
