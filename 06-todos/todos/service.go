@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/exp/slices"
 )
 
 var todos = []Todo{}
@@ -37,7 +38,41 @@ func CreateTodo(ctx *gin.Context) {
 }
 
 func DeleteTodos(ctx *gin.Context) {
+	ids := strings.Split(ctx.Query("ids"), ",")
 
+	if len(ids) == 0 || strings.Trim(ids[0], " ") == "" {
+		todos = []Todo{}
+
+		ctx.Status(http.StatusNoContent)
+
+		return
+	}
+
+	deleteIds := []int{}
+
+	for _, todo := range todos {
+		if slices.Contains(ids, strconv.Itoa(todo.Id)) {
+			deleteIds = append(deleteIds, todo.Id)
+		}
+	}
+
+	if len(ids) != len(deleteIds) {
+		ctx.String(http.StatusBadRequest, "Bad Request")
+
+		return
+	}
+
+	deletedTodos := []Todo{}
+
+	for _, todo := range todos {
+		if !slices.Contains(deleteIds, todo.Id) {
+			deletedTodos = append(deletedTodos, todo)
+		}
+	}
+
+	todos = deletedTodos
+
+	ctx.Status(http.StatusNoContent)
 }
 
 func UpdateTodo(ctx *gin.Context) {
