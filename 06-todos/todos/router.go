@@ -15,7 +15,11 @@ func Router(routerGroup *gin.RouterGroup) {
 		DeleteTodos(ctx)
 	})
 
-	routerGroup.PUT("/:id", func(ctx *gin.Context) {
+	routerGroup.PUT("/:id/content", func(ctx *gin.Context) {
+		UpdateTodo(ctx)
+	})
+
+	routerGroup.PUT("/:id/", func(ctx *gin.Context) {
 		UpdateTodo(ctx)
 	})
 }
