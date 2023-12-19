@@ -16,10 +16,10 @@ func Router(routerGroup *gin.RouterGroup) {
 	})
 
 	routerGroup.PUT("/:id/content", func(ctx *gin.Context) {
-		UpdateTodo(ctx)
+		UpdateContent(ctx)
 	})
 
-	routerGroup.PUT("/:id/", func(ctx *gin.Context) {
-		UpdateTodo(ctx)
+	routerGroup.PUT("/:id/completion", func(ctx *gin.Context) {
+		UpdateCompletion(ctx)
 	})
 }

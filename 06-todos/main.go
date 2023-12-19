@@ -10,13 +10,13 @@ import (
 func main() {
 	engine := gin.New()
 
-	engine.Static("/public", "public")
-
 	engine.Use(gin.Logger())
 
 	engine.Use(gin.CustomRecovery(func(ctx *gin.Context, err any) {
 		ctx.String(http.StatusInternalServerError, "Internal Server Error")
 	}))
+
+	engine.Static("/public", "public")
 
 	todos.Router(engine.Group("/todos"))
 
