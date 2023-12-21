@@ -11,11 +11,11 @@ import (
 
 var todos = []Todo{}
 
-func FindTodos(ctx *gin.Context) {
+func findTodos(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"todos": todos})
 }
 
-func CreateTodo(ctx *gin.Context) {
+func createTodo(ctx *gin.Context) {
 	var body struct { Content string }
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -37,7 +37,7 @@ func CreateTodo(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, todo)
 }
 
-func DeleteTodos(ctx *gin.Context) {
+func deleteTodos(ctx *gin.Context) {
 	ids := strings.Split(ctx.Query("ids"), ",")
 
 	if len(ids) == 0 || strings.Trim(ids[0], " ") == "" {
@@ -75,7 +75,7 @@ func DeleteTodos(ctx *gin.Context) {
 	ctx.Status(http.StatusNoContent)
 }
 
-func UpdateContent(ctx *gin.Context) {
+func updateContent(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 
 	if err != nil {
@@ -105,7 +105,7 @@ func UpdateContent(ctx *gin.Context) {
 	ctx.String(http.StatusNotFound, "Not Found")
 }
 
-func UpdateCompletion(ctx *gin.Context) {
+func updateCompletion(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 
 	if err != nil {
