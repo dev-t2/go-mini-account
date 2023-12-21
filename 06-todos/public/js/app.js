@@ -1,9 +1,8 @@
 const todoForm = document.querySelector('form');
 const todoFormInput = todoForm.querySelector('input');
 const todoFormButton = todoForm.querySelector('button');
-const deleteContainer = document.querySelector('.delete-container');
-const deleteSelectionButton = deleteContainer.querySelector('.selection');
-const deleteAllButton = deleteContainer.querySelector('.all');
+const deleteSelectionButton = document.querySelector('.selection');
+const deleteAllButton = document.querySelector('.all');
 const todoList = document.querySelector('ul');
 
 let todos = [];
@@ -17,16 +16,15 @@ const createTodo = (data) => {
   const button = document.createElement('button');
 
   deleteAllButton.hidden = false;
+
   input.type = 'checkbox';
   input.checked = data.isComplete;
-  span.innerText = data.content;
-  button.innerText = 'Delete';
 
   input.addEventListener('click', async (event) => {
     try {
       const isComplete = event.target.checked;
 
-      await axios.put(`/todos/${data.id}`, { isComplete });
+      await axios.patch(`/todos/${data.id}/completion`, { isComplete });
 
       todos = todos.map((todo) => {
         return todo.id === data.id ? { ...todo, isComplete } : todo;
@@ -38,14 +36,19 @@ const createTodo = (data) => {
     }
   });
 
+  span.innerText = data.content;
+
   span.addEventListener('click', (event) => {
     todos = todos.map((todo) => {
       return { ...todo, isUpdate: todo.id === data.id };
     });
 
     todoFormInput.value = event.target.innerText;
+
     todoFormButton.innerText = 'Update';
   });
+
+  button.innerText = 'Delete';
 
   button.addEventListener('click', async () => {
     try {
@@ -54,6 +57,7 @@ const createTodo = (data) => {
       todos = todos.filter((todo) => todo.id !== data.id);
 
       deleteSelectionButton.hidden = !todos.some((todo) => todo.isComplete);
+
       deleteAllButton.hidden = !todos.length;
 
       todoList.removeChild(li);
@@ -65,6 +69,7 @@ const createTodo = (data) => {
   li.appendChild(input);
   li.appendChild(span);
   li.appendChild(button);
+
   todoList.appendChild(li);
 };
 
@@ -85,13 +90,14 @@ todoForm.addEventListener('submit', async (event) => {
     }
 
     if (selectedTodo && content) {
-      await axios.put(`/todos/${selectedTodo.id}`, { content });
+      await axios.patch(`/todos/${selectedTodo.id}/content`, { content });
 
       const index = todos.findIndex((todo) => todo.id === selectedTodo.id);
 
       todos[index].content = content;
 
       todoFormInput.value = '';
+
       todoFormButton.innerText = 'Create';
 
       const span = todoList.childNodes[index].querySelector('span');
@@ -105,8 +111,8 @@ todoForm.addEventListener('submit', async (event) => {
 
 deleteSelectionButton.addEventListener('click', async () => {
   try {
-    const ids = todos.reduce((ids, todo) => {
-      return todo.isComplete ? [...ids, todo.id] : ids;
+    const ids = todos.reduce((result, todo) => {
+      return todo.isComplete ? [...result, todo.id] : result;
     }, []);
 
     await axios.delete(`/todos?ids=${ids.join(',')}`);
@@ -122,6 +128,7 @@ deleteSelectionButton.addEventListener('click', async () => {
     });
 
     deleteSelectionButton.hidden = !todos.some((todo) => todo.isComplete);
+
     deleteAllButton.hidden = !todos.length;
   } catch (err) {
     console.error(err);
@@ -135,6 +142,7 @@ deleteAllButton.addEventListener('click', async () => {
     todos = [];
 
     deleteSelectionButton.hidden = true;
+
     deleteAllButton.hidden = true;
 
     todoList.innerHTML = '';
