@@ -10,11 +10,11 @@ import (
 
 var users = []User{}
 
-func FindUsers(ctx *gin.Context) {
+func findUsers(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"users": users})
 }
 
-func CreateUser(ctx *gin.Context) {
+func createUser(ctx *gin.Context) {
 	var body struct { Nickname string }
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -52,7 +52,7 @@ func CreateUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, user)
 }
 
-func FindUser(ctx *gin.Context) {
+func findUser(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 
 	if err != nil {
@@ -72,7 +72,7 @@ func FindUser(ctx *gin.Context) {
 	ctx.String(http.StatusNotFound, "Not Found")
 }
 
-func UpdateUser(ctx *gin.Context) {
+func updateUser(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 
 	if err != nil {
@@ -118,7 +118,7 @@ func UpdateUser(ctx *gin.Context) {
 	ctx.String(http.StatusNotFound, "Not Found")
 }
 
-func DeleteUser(ctx *gin.Context) {
+func deleteUser(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 
 	if err != nil {

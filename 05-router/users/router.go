@@ -4,22 +4,22 @@ import "github.com/gin-gonic/gin"
 
 func Router(routerGroup *gin.RouterGroup) {
 	routerGroup.GET("/", func(ctx *gin.Context) {
-		FindUsers(ctx)
+		findUsers(ctx)
 	})
 
 	routerGroup.POST("/", func(ctx *gin.Context) {
-		CreateUser(ctx)
+		createUser(ctx)
 	})
 
 	routerGroup.GET("/:id", func(ctx *gin.Context) {
-		FindUser(ctx)
+		findUser(ctx)
 	})
 
 	routerGroup.PUT("/:id", func(ctx *gin.Context) {
-		UpdateUser(ctx)
+		updateUser(ctx)
 	})
 
 	routerGroup.DELETE("/:id", func(ctx *gin.Context) {
-		DeleteUser(ctx)
+		deleteUser(ctx)
 	})
 }
