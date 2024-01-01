@@ -142,3 +142,63 @@ func updateContent(ctx *gin.Context) {
 
 	ctx.String(http.StatusNotFound, "Not Found")
 }
+
+func updateOrder(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+
+	if err != nil {
+		ctx.String(http.StatusBadRequest, "Bad Request")
+
+		return
+	}
+
+	var body struct { Direction string }
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ctx.String(http.StatusBadRequest, "Bad Request")
+
+		return
+	}
+
+	for index, todo := range todos {
+		if todo.Id == id {
+			if body.Direction == "up" && todo.Order > 0 {
+				order := todo.Order - 1
+
+				for index, todo := range todos {
+					if todo.Order == order {
+						todos[index].Order = todos[index].Order + 1 
+
+						break
+					}
+				}
+
+				todos[index].Order = order
+
+				ctx.Status(http.StatusNoContent)
+
+				return
+			}
+
+			if body.Direction == "down" && todo.Order < len(todos) - 1 {
+				order := todo.Order + 1
+
+				for index, todo := range todos {
+					if todo.Order == order {
+						todos[index].Order = todos[index].Order - 1 
+
+						break
+					}
+				}
+
+				todos[index].Order = order
+
+				ctx.Status(http.StatusNoContent)
+
+				return
+			}
+		}
+	}
+
+	ctx.String(http.StatusNotFound, "Not Found")
+}

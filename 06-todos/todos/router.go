@@ -24,4 +24,8 @@ func Router(routerGroup *gin.RouterGroup) {
 	routerGroup.PATCH("/:id/content", func(ctx *gin.Context) {
 		updateContent(ctx)
 	})
+
+	routerGroup.PATCH("/:id/order", func(ctx *gin.Context) {
+		updateOrder(ctx)
+	})
 }
