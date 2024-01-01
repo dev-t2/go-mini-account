@@ -1,6 +1,8 @@
 package todos
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func Router(routerGroup *gin.RouterGroup) {
 	routerGroup.GET("/", func(ctx *gin.Context) {
@@ -15,11 +17,11 @@ func Router(routerGroup *gin.RouterGroup) {
 		deleteTodos(ctx)
 	})
 
-	routerGroup.PUT("/:id/content", func(ctx *gin.Context) {
+	routerGroup.PATCH("/:id/content", func(ctx *gin.Context) {
 		updateContent(ctx)
 	})
 
-	routerGroup.PUT("/:id/completion", func(ctx *gin.Context) {
+	routerGroup.PATCH("/:id/completion", func(ctx *gin.Context) {
 		updateCompletion(ctx)
 	})
 }
