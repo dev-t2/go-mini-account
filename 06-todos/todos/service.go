@@ -30,7 +30,15 @@ func createTodo(ctx *gin.Context) {
 		id = todos[len(todos) - 1].Id + 1
 	}
 
-	todo := Todo{Id: id, Content: strings.Trim(body.Content, " ")}
+	var maxOrder = -1
+
+	for _, todo := range todos {
+		if maxOrder < todo.Order {
+			maxOrder = todo.Order
+		}
+	}
+
+	todo := Todo{Id: id, Content: strings.Trim(body.Content, " "), Order: maxOrder + 1}
 
 	todos = append(todos, todo)
 
