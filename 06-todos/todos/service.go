@@ -75,36 +75,6 @@ func deleteTodos(ctx *gin.Context) {
 	ctx.Status(http.StatusNoContent)
 }
 
-func updateContent(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
-
-	if err != nil {
-		ctx.String(http.StatusBadRequest, "Bad Request")
-
-		return
-	}
-
-	var body struct { Content string }
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.String(http.StatusBadRequest, "Bad Request")
-
-		return
-	}
-
-	for index, todo := range todos {
-		if todo.Id == id {
-			todos[index].Content = strings.Trim(body.Content, " ")
-
-			ctx.Status(http.StatusNoContent)
-
-			return
-		}
-	}
-
-	ctx.String(http.StatusNotFound, "Not Found")
-}
-
 func updateCompletion(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 
@@ -125,6 +95,36 @@ func updateCompletion(ctx *gin.Context) {
 	for index, todo := range todos {
 		if todo.Id == id {
 			todos[index].IsComplete = body.IsComplete
+
+			ctx.Status(http.StatusNoContent)
+
+			return
+		}
+	}
+
+	ctx.String(http.StatusNotFound, "Not Found")
+}
+
+func updateContent(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+
+	if err != nil {
+		ctx.String(http.StatusBadRequest, "Bad Request")
+
+		return
+	}
+
+	var body struct { Content string }
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ctx.String(http.StatusBadRequest, "Bad Request")
+
+		return
+	}
+
+	for index, todo := range todos {
+		if todo.Id == id {
+			todos[index].Content = strings.Trim(body.Content, " ")
 
 			ctx.Status(http.StatusNoContent)
 

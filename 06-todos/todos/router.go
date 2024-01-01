@@ -17,11 +17,11 @@ func Router(routerGroup *gin.RouterGroup) {
 		deleteTodos(ctx)
 	})
 
-	routerGroup.PATCH("/:id/content", func(ctx *gin.Context) {
-		updateContent(ctx)
-	})
-
 	routerGroup.PATCH("/:id/completion", func(ctx *gin.Context) {
 		updateCompletion(ctx)
+	})
+
+	routerGroup.PATCH("/:id/content", func(ctx *gin.Context) {
+		updateContent(ctx)
 	})
 }
